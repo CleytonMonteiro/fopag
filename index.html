@@ -168,8 +168,21 @@
             const pdfStyles = `<style>
                 body { font-family: Arial, sans-serif; } 
                 .pdf-hide { display: none; } 
-                .sector-container:not(:first-child) { page-break-before: always; } /* CORREÇÃO APLICADA AQUI */
-                table { width: 100%; border-collapse: collapse; margin-bottom: 20px; } 
+                .sector-container:not(:first-child) { page-break-before: always; }
+                h3 { 
+                    font-size: 12pt; 
+                    margin-top: 15px; /* Reduz a margem superior do h3 */
+                    margin-bottom: 5px; /* Reduz a margem inferior do h3 */
+                    border: none; 
+                    background-color: transparent; 
+                    text-align: center; /* Garante alinhamento centralizado */
+                } 
+                table { 
+                    width: 100%; 
+                    border-collapse: collapse; 
+                    margin-top: 5px; /* Reduz a margem superior da tabela */
+                    margin-bottom: 20px; 
+                } 
                 th, td { 
                     border: 1px solid #ccc; 
                     padding: 5px; 
@@ -180,8 +193,16 @@
                 } 
                 th { background-color: #f2f2f2; font-weight: bold; } 
                 h1 { font-size: 16pt; text-align: center; margin-bottom: 20px; } 
-                h3 { font-size: 12pt; margin-top: 20px; border: none; background-color: transparent; } 
                 tfoot td { font-weight: bold; background-color: #f8f9fa; }
+                
+                /* Estilo para o total geral no final do PDF */
+                .grand-total-pdf { 
+                    font-size: 10pt; /* Reduz o tamanho da fonte */
+                    text-align: right; 
+                    font-family: Arial, sans-serif; 
+                    margin-top: 20px; 
+                    margin-right: 10px; /* Adiciona uma pequena margem à direita para não cortar */
+                }
             </style>`;
             contentToPrint.innerHTML = pdfStyles + `<h1>Relatório de Funcionários</h1><p style="text-align:center; font-size: 9pt;">Gerado em: ${new Date().toLocaleDateString('pt-BR')}</p>`;
             
@@ -193,7 +214,8 @@
             });
 
             const formattedTotal = `R$ ${partialTotalValor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-            contentToPrint.innerHTML += `<hr><h2 style="text-align: right; font-family: Arial, sans-serif; font-size: 14pt;">${totalLabel} ${formattedTotal}</h2>`;
+            // Aplica a nova classe de estilo para o total geral
+            contentToPrint.innerHTML += `<hr><h2 class="grand-total-pdf">${totalLabel} ${formattedTotal}</h2>`;
 
             const options = { 
                 margin: 0.5, 
